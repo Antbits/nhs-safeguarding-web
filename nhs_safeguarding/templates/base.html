@@ -1,0 +1,142 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        {% block title %}
+        {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+        {% endblock %}
+    </title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+
+    {# Global stylesheets #}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/cookieconsent.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/nhs_safeguarding.css' %}">
+
+    {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    {% wagtailuserbar %}
+    <div id="header-search">
+
+        <form action="{% url 'search' %}" id="search-form" onsubmit="validateSearchForm(event);" method="get">
+            <a href="/" alt="NHS logo"></a>
+            <div>
+                <input id="search-text" placeholder="Search" type="text" name="query" value="{{ search_query }}">
+                <input id="search-btn" type="image" aria-label="search" alt="Search" src="/static/images/search.svg">
+            </div>
+        </form>
+    </div>
+
+    {% block content %}{% endblock %}
+    <div id="footer">
+        <ul>
+            <li><a href="/about">Contact us</a></li>
+            <li><a href="/privacy">Privacy policy</a></li>
+            <li>All content © {% now "Y" %} NHS England</li>
+
+        </ul>
+    </div>
+
+    {# Global javascript #}
+    <script defer src="{% static 'js/cookieconsent.js' %}"></script>
+    <script>
+        var cookieconsent
+        window.addEventListener('load', function () {
+            cookieconsent = initCookieConsent();
+            cookieconsent.run({
+                autorun: true,
+                current_lang: 'en',
+                autoclear_cookies: true,
+                page_scripts: true,
+
+                onFirstAction: function (user_preferences, cookie) {
+                    // callback triggered only once
+                },
+
+                onAccept: function (cookie) {
+                    analyticsObj.init(window.location);
+                },
+
+                onChange: function (cookie, changed_preferences) {
+                    // ... cookieconsent preferences were changed
+                },
+
+                languages: {
+                    en: {
+                        consent_modal: {
+                            title: 'Cookie usage',
+                            description: "We'd like to use analytics cookies. These send information about how our app is used to help us make improvements. Let us know if this is OK.",
+                            primary_btn: {
+                                text: 'Accept',
+                                role: 'accept_all'              // 'accept_selected' or 'accept_all'
+                            },
+                            secondary_btn: {
+                                text: 'Settings',
+                                role: 'settings'                // 'settings' or 'accept_necessary'
+                            }
+                        },
+                        settings_modal: {
+                            title: 'Cookie preferences',
+                            save_settings_btn: 'Save settings',
+                            accept_all_btn: 'Accept',
+                            reject_all_btn: 'Reject',       // optional, [v.2.5.0 +]
+                            cookie_table_headers: [
+                                { col1: 'Name' },
+                                { col2: 'Domain' },
+                                { col3: 'Expiration' },
+                                { col4: 'Description' },
+                                { col5: 'Type' }
+                            ],
+                            blocks: [
+                                {
+                                    title: 'Cookie usage',
+                                    description: "We'd like to set analytics cookies to help us to improve our app by collecting and reporting information on how you use it. The cookies collect information in an anonymous form."
+                                }, {
+                                    title: 'Analytics cookies',
+                                    description: "",
+                                    toggle: {
+                                        value: 'analytics',
+                                        enabled: true,
+                                        readonly: false
+                                    },
+                                    cookie_table: [
+                                        {
+                                            col1: 'Antbits',
+                                            col2: 'analytics.antbits.com',
+                                            col3: '1 year',
+                                            col4: '',
+                                            col5: 'Permanent cookie',
+                                            is_regex: true
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript" src="{% static 'js/utils.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/analytics.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/nhs_safeguarding.js' %}"></script>
+
+    {% block extra_js %}
+    {# Override this in templates to add extra javascript #}
+    {% endblock %}
+</body>
+
+</html>

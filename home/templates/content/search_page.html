@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+{% block body_class %}template-searchresults{% endblock %}
+{% block title %}Search{% endblock %}
+{% block content %}
+<div id="header-breadcrumb">
+    <ul> 
+        <li><a href="/">Home</a></li>
+    </ul>
+</div>
+<div id="page-content" class="search easy-read-content">
+    <h1>Search results</h1>
+    {% if search_results %}
+        <ul>
+            {% for result in search_results %}
+                <li>
+                    <a href="{% pageurl result %}">{{ result }}</a>
+                    <ul class="search-breadcrumb">
+                    {% for page in result.get_ancestors %}
+                    {% if page.is_root == False and "(blank)" not in page.title and page.title != "Safeguarding" %}
+                    <li>{{ page.title }}</li>
+                    {% endif %}
+                    {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <div id="footer-nav">
+
+        {% if search_results.has_previous %}
+            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}" class="footer-nav-cell"><div>
+                <div></div><span>Previous</span>
+            </div></a>
+        {% else %}
+            <div class="footer-nav-cell"></div>
+        {% endif %}
+
+        {% if search_results.has_next %}
+            <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}" class="footer-nav-cell"><div><span>Next</span><div></div>
+            </div></a>
+        {% else %}
+            <div class="footer-nav-cell"></div>
+        {% endif %}
+        </div>
+    {% elif search_query %}
+        No results found
+    {% endif %}
+  
+</div>
+<script type="text/javascript" src="/static/js/search.js"></script>
+<script>
+    searchFormat('{{search_query}}')
+</script> 
+{% endblock %}

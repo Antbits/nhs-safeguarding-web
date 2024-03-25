@@ -1,0 +1,7 @@
+.Draftail-block--anchorlist a::before{
+  content: "—";
+  text-indent: 0;
+  color: #b2b2c2;
+  font-weight: bold;
+  margin-right:0.5rem;
+}

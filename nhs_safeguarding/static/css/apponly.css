@@ -1,0 +1,11 @@
+.Draftail-block--apponly{
+    outline: 1px dotted #FF0000;
+    margin-top:0.5rem;
+    margin-bottom:0.5rem;
+}
+
+.Draftail-block--apponly::after{
+    content: " (Displayed on app only)";
+    color:#FF0000;
+    font-size: 0.75rem;
+}

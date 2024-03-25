@@ -1,0 +1,32 @@
+
+
+.Draftail-block--warninglist{
+    background-color: #FFF9C4;
+    margin: 0 0 0 0;
+    padding-left: 3rem;
+    padding-right: 2rem;
+    padding-top: 0.5rem;
+    list-style: none;
+  }
+  .Draftail-block--warninglist.public-DraftStyleDefault-depth0.public-DraftStyleDefault-reset{
+    margin-left:0;
+  }
+  .Draftail-block--warninglist div>span::before {
+    content: "•";
+    text-indent: 0;
+    color: #212B32;
+    font-weight: 700;
+    margin-left: -1rem;
+    margin-right: 0.6rem;
+  }
+
+  .Draftail-block--warninglist:first-of-type {
+    border-top: #FFEB3B solid 0.5rem;
+    padding-top: 1.5rem;
+  }
+  
+  .Draftail-block--warninglist:last-of-type {
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  

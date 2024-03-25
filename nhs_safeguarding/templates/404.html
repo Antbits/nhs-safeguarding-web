@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+{% block body_class %}errorpage{% endblock %}
+
+{% block content %}
+<div id="header-breadcrumb"></div>
+<div id="page-content" class="easy-read-content">
+
+    <h1>
+        {{ page_url }}Unfortunately, the page you are looking for could not be found
+    </h1>
+    <p>
+        The page might have been removed or archived, or the address might be incorrect.
+    </p>
+    <p>
+        Please check the address is correct. You might find what your looking for on our
+        <a href="/">home page</a>.
+
+        If you think this is an error, please
+        <a href="/about/">contact us</a>.
+        Alternatively, you can use search above:
+    </p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+.Draftail-block--scrolltop  a::before, .Draftail-block--scrolltop  div::before{
+    content:'';
+    padding:0.75rem;
+    background-image: url('/static/images/up_arrow.svg');
+    background-repeat:no-repeat;
+    background-position:left center;
+    background-size:1.1875rem 1.5rem;
+}

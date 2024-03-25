@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+{% load static  %}
+{% block body_class %}content{% endblock %}
+{% block content %}
+<div id="header-breadcrumb">
+    {% if self.get_ancestors|length > 1 %}
+    <ul> 
+        <li><a href="/">Home</a></li>
+        {% for page in self.get_ancestors %}
+        {% if page.is_root == False and "(blank)" not in page.title and "Safeguarding" != page.title%}
+        <li><a href="{% pageurl page %}">{{ page.title }}</a></li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<div id="page-content" class = "easy-read-content">
+    <h1>{{ page.title }}</h1>
+    {{ page.content }}
+    <div id="footer-nav">
+        {% if page.get_prev_sibling %}
+        <a href="{{ page.get_prev_sibling.url}}" class="footer-nav-cell">
+            <div>
+                <div></div><span>Previous</span>
+            </div><span>{{ page.get_prev_sibling.title}}</span>
+        </a>
+        {% else %}
+        <div class="footer-nav-cell"></div>
+        {% endif %}
+        {% if page.get_next_sibling %}
+        <a href="{{ page.get_next_sibling.url}}" class="footer-nav-cell">
+            <div><span>Next</span><div></div>
+            </div><span>{{ page.get_next_sibling.title}}</span>
+        </a>
+        {% else %}
+        <div class="footer-nav-cell"></div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

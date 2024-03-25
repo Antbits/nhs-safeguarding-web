@@ -1,0 +1,1 @@
+from wagtail.images.formats import Format, register_image_format
