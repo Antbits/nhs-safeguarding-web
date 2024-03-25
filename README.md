@@ -1,10 +1,9 @@
-# NHS Safeguarding Web App
 
 # NHS Safeguarding web application
 
 A Wagtail driven web application
 
-# Getting started
+## Getting started
 
 Install Python, Wagtail and Venv
 
